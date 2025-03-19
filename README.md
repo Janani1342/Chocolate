@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChocoLuxe - Premium Chocolates</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #D7A86E, #8B5E3B);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #fff;
+        }
+        header {
+            background: rgba(51, 26, 12, 0.9);
+            padding: 15px 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        header h1 {
+            font-weight: 600;
+            color: #F5E1C0;
+            margin: 0;
+        }
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+        nav a, nav button {
+            text-decoration: none;
+            color: #F5E1C0;
+            font-weight: 400;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .hero {
+            padding: 120px 20px 80px;
+        }
+        .hero h2 {
+            font-size: 2.5em;
+            color: #F5E1C0;
+        }
+        .hero p {
+            font-size: 1.2em;
+            color: #F5E1C0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background: #8B5E3B;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 10px;
+            border: 2px solid #F5E1C0;
+            cursor: pointer;
+        }
+        .shop-section {
+            display: none;
+            padding: 50px;
+        }
+        .chocolate-list {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .chocolate-item {
+            background: #5C3D2E;
+            padding: 15px;
+            border-radius: 10px;
+            color: #F5E1C0;
+            text-align: center;
+            width: 200px;
+        }
+        .add-cart-btn, .clear-cart-btn, .buy-now-btn {
+            background: #F5E1C0;
+            color: #5C3D2E;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .cart-popup {
+            position: fixed;
+            right: 20px;
+            top: 70px;
+            background: #5C3D2E;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ChocoLuxe</h1>
+        <nav>
+            <a href="#home">Home</a>
+            <button onclick="toggleShop()">Shop</button>
+            <button onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <h2>Indulge in Luxury Chocolates</h2>
+        <p>Discover the rich, smooth, and irresistible taste of premium handcrafted chocolates.</p>
+        <button class="btn" onclick="toggleShop()">Shop Now</button>
+    </section>
+
+    <section id="shop" class="shop-section">
+        <h2>Our Chocolate Collection</h2>
+        <div class="chocolate-list">
+            <div class="chocolate-item">
+                <h3>Dark Chocolate</h3>
+                <p>$10</p>
+                <button class="add-cart-btn" onclick="addToCart('Dark Chocolate', 10)">Add to Cart</button>
+            </div>
+            <div class="chocolate-item">
+                <h3>Milk Chocolate</h3>
+                <p>$8</p>
+                <button class="add-cart-btn" onclick="addToCart('Milk Chocolate', 8)">Add to Cart</button>
+            </div>
+            <div class="chocolate-item">
+                <h3>Hazelnut Chocolate</h3>
+                <p>$12</p>
+                <button class="add-cart-btn" onclick="addToCart('Hazelnut Chocolate', 12)">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="cart-popup" class="cart-popup">
+        <h3>Cart</h3>
+        <ul id="cart-items"></ul>
+        <h3>Total: $<span id="cart-total">0</span></h3>
+        <button class="clear-cart-btn" onclick="clearCart()">Clear Cart</button>
+        <button class="buy-now-btn" onclick="buyNow()">Buy Now</button>
+    </div>
+
+    <script>
+        let total = 0;
+
+        function toggleShop() {
+            document.getElementById('shop').style.display = 'block';
+        }
+        function toggleCart() {
+            let cartPopup = document.getElementById('cart-popup');
+            cartPopup.style.display = cartPopup.style.display === 'block' ? 'none' : 'block';
+        }
+        function addToCart(name, price) {
+            let cartList = document.getElementById('cart-items');
+            let item = document.createElement('li');
+            item.textContent = `${name} - $${price}`;
+            cartList.appendChild(item);
+            total += price;
+            document.getElementById('cart-total').textContent = total;
+            document.getElementById('cart-count').textContent = cartList.children.length;
+        }
+        function clearCart() {
+            document.getElementById('cart-items').innerHTML = '';
+            document.getElementById('cart-total').textContent = '0';
+            document.getElementById('cart-count').textContent = '0';
+            total = 0;
+        }
+        function buyNow() {
+            alert('Thank you for your purchase!');
+            clearCart();
+        }
+    </script>
+</body>
+</html>
